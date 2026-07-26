@@ -1,0 +1,41 @@
+name: Job Hunter
+
+on:
+  schedule:
+    - cron: '0 9 * * *'   # ~5:00 AM Eastern (EDT, UTC-4)
+    - cron: '0 21 * * *'  # ~5:00 PM Eastern (EDT, UTC-4)
+  workflow_dispatch: {}    # allows manual trigger from the Actions tab
+
+jobs:
+  run-job-hunter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Write Google service account key
+        run: echo "$JSON_KEY_BASE_64" | base64 -d > service-account.json
+        env:
+          JSON_KEY_BASE_64: ${{ secrets.JSON_KEY_BASE_64 }}
+
+      - name: Fetch jobs
+        run: python scripts/fetch_jobs.py configs/harnoor.json
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+
+      - name: Score jobs
+        run: python scripts/score_jobs.py configs/harnoor.json
+
+      - name: Push to Google Sheet
+        run: python scripts/push_to_sheets.py configs/harnoor.json
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: service-account.json
+          SHEET_ID: ${{ secrets.SHEET_ID }}

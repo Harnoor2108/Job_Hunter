@@ -1,0 +1,39 @@
+{
+  "candidate_name": "Harnoor Kaur",
+  "target_roles": [
+    "Software Engineer",
+    "Software Developer",
+    "Junior Software Engineer",
+    "Junior Software Developer",
+    "Full Stack Developer",
+    "Backend Developer",
+    "Application Developer",
+    "Associate Software Engineer"
+  ],
+  "location": {
+    "city": "Toronto",
+    "region": "Ontario",
+    "country": "Canada",
+    "radius_km": 100,
+    "include_remote_in_country": true
+  },
+  "experience_years": 0,
+  "seniority_filter_codes": [1, 2],
+  "results_per_search": 50,
+  "title_match_bonus": 6,
+  "require_title_match": false,
+  "min_match_score": 50,
+  "core_skills": {
+    "java": {"weight": 3, "variants": ["java", "spring boot", "spring"]},
+    "javascript": {"weight": 3, "variants": ["javascript", "typescript", "node.js", "express"]},
+    "frontend": {"weight": 2, "variants": ["angular", "react", "html", "css"]},
+    "sql": {"weight": 3, "variants": ["sql", "postgresql", "postgres", "mysql"]},
+    "cloud": {"weight": 3, "variants": ["aws", "cognito", "s3", "dynamodb", "azure", "gcp"]},
+    "devops": {"weight": 2, "variants": ["docker", "ci/cd", "git", "github actions", "jenkins"]},
+    "api": {"weight": 2, "variants": ["rest api", "restful", "microservice"]},
+    "testing": {"weight": 1, "variants": ["jest", "hurl", "unit test", "test plan"]}
+  },
+  "exclude_title_terms": ["senior", "sr.", "lead", "principal", "staff", "manager", "director", "architect"],
+  "max_experience_years_penalty": 5,
+  "verify_listings": true
+}
