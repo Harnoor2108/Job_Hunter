@@ -13,7 +13,8 @@ Requires env vars:
     EMAIL_ADDRESS      - sender Gmail address
     EMAIL_APP_PASSWORD - Gmail App Password (not your regular password —
                           generate one at https://myaccount.google.com/apppasswords)
-    EMAIL_TO           - recipient address (can be the same as EMAIL_ADDRESS)
+    EMAIL_TO           - recipient address(es). Comma-separated for multiple,
+                          e.g. "first@gmail.com, second@gmail.com"
     SHEET_ID           - used to link back to the full sheet
 """
 
@@ -71,15 +72,17 @@ def send_email(subject: str, body: str):
     if missing:
         raise RuntimeError(f"Missing required env vars: {', '.join(missing)}")
 
+    recipients = [r.strip() for r in recipient.split(",")]
+
     msg = MIMEMultipart()
     msg["From"] = sender
-    msg["To"] = recipient
+    msg["To"] = ", ".join(recipients)
     msg["Subject"] = subject
     msg.attach(MIMEText(body, "plain"))
 
     with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
         server.login(sender, password)
-        server.sendmail(sender, recipient, msg.as_string())
+        server.sendmail(sender, recipients, msg.as_string())
 
 
 def main():
