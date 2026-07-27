@@ -22,7 +22,11 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Write Google service account key
+<<<<<<< HEAD
+        run: echo "$JSON_KEY_BASE_64" | base64 -d --ignore-garbage > service-account.json
+=======
         run: echo "$JSON_KEY_BASE_64" | base64 -d > service-account.json
+>>>>>>> e7a897e4b7b7a8cab4ca481c207f9864d07eacb7
         env:
           JSON_KEY_BASE_64: ${{ secrets.JSON_KEY_BASE_64 }}
 
@@ -39,3 +43,14 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: service-account.json
           SHEET_ID: ${{ secrets.SHEET_ID }}
+<<<<<<< HEAD
+
+      - name: Email summary if jobs found
+        run: python scripts/send_email.py configs/harnoor.json
+        env:
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+=======
+>>>>>>> e7a897e4b7b7a8cab4ca481c207f9864d07eacb7
